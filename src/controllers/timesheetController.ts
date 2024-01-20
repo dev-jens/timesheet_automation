@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import { timesheetService } from "../Services/timesheetService"
 
 const fillInTimehseet = (req, res) => {

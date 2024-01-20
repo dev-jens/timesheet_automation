@@ -2,11 +2,12 @@ import express from 'express';
 import { timesheetController } from "../controllers/timesheetController";
 
 
-const timehseetRouter = express.Router();
+const timesheetRouter = express.Router();
 
 
-timehseetRouter
+timesheetRouter
     .route('/')
-    .post(timesheetController.insertEvent);
+    .get(timesheetController.getData) // delete later
+    .post(timesheetController.fillInTimehseet)
 
-export default timehseetRouter;
+export default timesheetRouter;

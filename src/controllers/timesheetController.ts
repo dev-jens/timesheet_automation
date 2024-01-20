@@ -1,25 +1,32 @@
 import { Request, Response } from 'express';
-import { timesheetService } from "../Services/timesheetService"
+import { timesheetService } from "../services/timesheetService"
 
-const fillInTimehseet = (req, res) => {
+const fillInTimehseet = (req : Request, res : Response) => {
 
-  const accessToken = req.body.apiKey;
-  const year = parseInt(req.body.year);
-  const month = parseInt(req.body.month);
-  const hours = parseInt(req.body.hours);
+  const userID: string = req.body.userID;
+  const accessToken : string = req.body.apiKey;
+  const year : number = parseInt(req.body.year);
+  const month: number = parseInt(req.body.month);
 
-  timesheetService.fillTimesheet(year, month, hours, accessToken)
-    .then(async (data) => {
-      const response = await fillTimesheet(year, month, hours, accessToken);
-      res.json(response);
-    })
-    .catch((error) => {
-      res.status(500).json({ error: `Error filling in worked hours: ${error}` });
-    });
+  timesheetService.fillTimesheetIn(year, month, accessToken, userID)
+  .then((data) => {
+    res.json(data)
+  })
+  .catch((err) => {
+    res.status(402).json({ error: err });
+  });
+
+  res.redirect("http://localhost:3000/")
+ 
 };
 
+//delete later
+const getData = (req : Request, res : Response) => {
+  console.log("getData");
+  res.status(200).json({ data: "data" });
+};
 
-
-export const eventController = { 
+export const timesheetController = { 
     fillInTimehseet,
+    getData
   };

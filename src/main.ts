@@ -1,5 +1,6 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import { defaultConfig } from './config/default.config';
+// import { bodyParser } from 'bodyParser'
 import router from './routes/index';
 
 
@@ -8,7 +9,12 @@ const app: Express = express();
 
 
 //middleware
+// app.use(bodyParser.json());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
+app.use('/api', router);
+
 
 
 //routes

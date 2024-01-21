@@ -6,27 +6,27 @@ const API_URL = defaultConfig.API_URL;
 
 
 const fillTimesheetIn = async (year: number, month: number, accessToken: string, userID: string) => {
-  let firstDayOfMonth: Date = new Date(year, month - 1, 1);
-  let lastDayOfMonth: Date = new Date(year, month, 0);
-  log(firstDayOfMonth);
-  log(lastDayOfMonth);
+  const firstDayOfMonth: Date = new Date(Date.UTC(year, month - 1, 1));
+  const lastDayOfMonth: Date = new Date(Date.UTC(year, month, 0));
+  
+  console.log("firstday " + firstDayOfMonth.toISOString());
+  console.log("lasrtday " + lastDayOfMonth.toISOString());
 
-  for (let currentDay = new Date(firstDayOfMonth); currentDay <= lastDayOfMonth; currentDay.setDate(currentDay.getDate() + 1)) {
-    const dayOfWeek = currentDay.getDay();
+  for (let currentDay = firstDayOfMonth; currentDay <= lastDayOfMonth; currentDay.setUTCDate(currentDay.getUTCDate() + 1)) {
+    const dayOfWeek = currentDay.getUTCDay();
     const formattedDate = currentDay.toISOString().split('T')[0];
 
     if (dayOfWeek >= 1 && dayOfWeek <= 5) {
       if (dayOfWeek === 3) {
-        log(formattedDate);
+        console.log(formattedDate);
         // await postWorkedHoursAtHome(formattedDate, accessToken, userID);
       } else {
-        log(formattedDate);
+        console.log(formattedDate);
         // await postWorkedHoursAtClient(formattedDate, accessToken, userID);
       }
     }
   }
 };
-
 
 
 const postWorkedHoursAtClient = async (date: String, accessToken: string, userID: string) => {
